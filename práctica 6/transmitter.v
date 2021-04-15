@@ -1,6 +1,7 @@
 module transmitter (
 input [7:0]idata,
 input iEN,
+input iBPS
 input iClk,
 output odata
 );
@@ -32,7 +33,7 @@ begin
 	rcounter_Q <= rcounter_D;
 	rstart_Q <= rstart_D;
 	rparity_Q <= rparity_D;
-if(iEN)
+if(iBPS)
 	rdata_Q <= rdata_D;
 else	
 	rdata_Q <= rdata_Q;
@@ -83,5 +84,4 @@ begin
 	endcase
 end
 
-endmodule
-
+endmodule 
