@@ -60,7 +60,7 @@ begin
 	begin
 		if(rcounter_Q == 3'd7)
 		begin
-			if (rparity_D % 2 == 1) // paridad par o impar
+			if (rparity_Q % 2 == 1) // paridad par o impar
 			begin
 				rdata_D = 1'd0; //impar
 			end
@@ -95,5 +95,5 @@ begin
 		end
 	endcase
 end
-
+end
 endmodule 

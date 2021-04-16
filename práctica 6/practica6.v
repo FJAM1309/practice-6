@@ -38,25 +38,25 @@ receiver Receiver(
 
 counter Separador(
 .iClk (iClk),
-.idata (number)
+.idata (number),
 .oSalida1 (BCD1),
 .oSalida2 (BCD2),
 .oSalida3 (BCD3)
 );
 
-BCD BCD1(
+BCD display1(
 .iClk (iClk),
 .iE (BCD1),
 .oS (oS1)
 );
 
-BCD BCD2(
+BCD display2(
 .iClk (iClk),
 .iE (BCD2),
 .oS (oS1)
 );
 
-BCD BCD3(
+BCD display3(
 .iClk (iClk),
 .iE (BCD3),
 .oS (oS1)

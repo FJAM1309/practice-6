@@ -28,22 +28,22 @@ end
 
 always @ *
 begin
-if(rSalida_D1 >= 4'd0 && rSalida_D1 < 4'd10)
+if(rSalida_Q1 >= 4'd0 && rSalida_Q1 < 4'd10)
 	begin
-	rSalida_D1 = rSalida_D1 + 4'd1;
-	if(rSalida_D1 > 4'd9)
+	rSalida_Q1 = rSalida_Q1 + 4'd1;
+	end
+	if(rSalida_Q1 > 4'd9)
 		begin
-		rSalida_D2 = rSalida_D2 + 4'd1;
-		rSalida_D1 = 4'd0;
-		if (rSalida_D1 > 4'd9 && rSalida_D2 == 4'd9)
+		rSalida_Q2 = rSalida_D2 + 4'd1;
+		rSalida_Q1 = 4'd0;
+		end
+		if (rSalida_Q1 > 4'd9 && rSalida_Q2 == 4'd9)
 			begin
-			rSalida_D1 = 4'd0;
-			rSalida_D2 = 4'd0;
+			rSalida_Q1 = 4'd0;
+			rSalida_Q2 = 4'd0;
+			rSalida_Q3 = rSalida_D3 + 4'd1;
 			end
-		if (rSalida_D1 > 4'd9 && rSalida_D2 == 4'd9)
-		
 		end
 	end
-end
 
 endmodule 
