@@ -1,7 +1,7 @@
 module receiver (
 input iClk,
 input idata,
-output [7:0]odata,
+output [7:0]odata
 );
 
 initial
@@ -11,6 +11,9 @@ end
 
 reg [7:0]rdata_D;
 reg [7:0]rdata_Q;
+
+reg [11:0]rRP_D;
+reg [11:0]rRP_Q;
 
 reg [2:0]rstate_D;
 reg [2:0]rstate_Q;
@@ -29,6 +32,7 @@ assign odata = rdata_Q;
 always @ (posedge iClk)
 begin
 	rcounter_Q <= rcounter_D;
+	rRP_Q <= rRP_D;
 	rparity_Q <= rparity_D;
 //if(iBPS)
 	rdata_Q <= rdata_D;
@@ -51,46 +55,56 @@ begin
 	end
 	2'd1: //START
 	begin
-		if(rcounter_Q == 3'd7)
+		if(rcounter_Q == 4'd9)
 		begin
-			rcounter_D = 3'd0;
+			rtparity_D = idata;
+		end
+		if(rcounter_Q == 4'd12)
+		begin
+			rcounter_D = 4'd0;
 			rstate_D = 2'd2;
 		end
 		else
 		begin
-		rdata_D << idata;
-		rcounter_Q = rcounter_D + 3'd1;
-			if(rdata_Q[rcounter_Q] == 1'd1)
+			rRP_D << idata;
+			rcounter_Q = rcounter_D + 4'd1;
+			if(rRP_D[rcounter_Q] == 1'd1)
 			begin
-				rparity_Q = rparity_D + 3'd1;
+				rparity_Q = rparity_D + 4'd1;
 			end
 			else
 			begin
-				rparity_Q = rparity_Q;
+				rparity_D = rparity_Q;
 			end
 		end
 	end
 	2'd2: //PARITY PARTY!!!!!!!!
+	if (rRP_Q % 2 == 1) // paridad par o impar
+	begin
+		rparity_D = 1'd0; //impar
+	end
 	else
 	begin
-		rdata_D = 1'd1;
-	end
-		rstart_D = 1'd1;
-		rstate_D = 2'd0;
+		rparity_D = 1'd1; //par
 	end
 	if(rtparity_Q == rparity_Q)
 	begin
-		
+		rdata_D = rRP_D;
+		rstate_D = 3'd3;
 	end
-	rparity_D = 1'd0;
+	else
+	begin
+		rstate_D = 1'd0;
+	end
 	
 	2'd3: //STOP
 	begin
-	
+		rdata_D = 1'd1;
+		rstate_D = 3'd0
 	end
 	default:
 	begin
-		rstart_D = 1'd1;
+		rdata_D = 1'd1;
 	end
 	endcase
 	
