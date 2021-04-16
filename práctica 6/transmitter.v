@@ -12,11 +12,11 @@ reg [7:0]rinput_Q;
 reg rdata_D = 1'd1;
 reg rdata_Q;
 
-reg [2:0]rstate_D;
-reg [2:0]rstate_Q;
+reg [1:0]rstate_D;
+reg [1:0]rstate_Q;
 
-reg [3:0]rcounter_D;
-reg [3:0]rcounter_Q;
+reg [2:0]rcounter_D;
+reg [2:0]rcounter_Q;
 
 reg [7:0]rparity_D;
 reg [7:0]rparity_Q;
@@ -87,8 +87,8 @@ begin
 	end
 		2'd3: //STOP
 		begin
-			rdata_D = 1'd0;
-			rstate_D = 3'd0;
+			rdata_D = 1'd1;
+			rstate_D = 2'd0;
 		default:
 		begin
 			rdata_D = 1'd1;
